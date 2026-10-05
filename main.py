@@ -7,6 +7,7 @@
 # program ends.
 
 import contact
+import check_input
 
 
 def read_file():
@@ -41,15 +42,7 @@ def get_menu_choice():
     print("3. Search Contact")
     print("4. Modify Contact")
     print("5. Save and Quit")
-    while True:
-        try:
-            input1 = int(input("> "))
-            if input1 < 1 or input1 > 5:
-                print("Invalid input! Please enter a number between 1 and 5.")
-            else:
-                break  # Exit the loop if the type conversion succeeds
-        except ValueError:
-            print("Invalid input! Please enter a whole number.")
+    input1 = check_input.get_int_range("> ", 1, 5)
     return input1
 
 def modify_contact(mod_contact):
@@ -66,40 +59,29 @@ def modify_contact(mod_contact):
         print("5. City")
         print("6. Zip")
         print("7. Save")
+        
+        choice = check_input.get_int_range("> ", 1, 7)
+        
+        if choice == 1:
+            mod_contact.first_name = input("First name: ")
 
-        valid_num = False
+        elif choice == 2:
+            mod_contact.last_name = input("Last name: ")
 
-        try:
-            choice = int(input("> "))
-            if 1 <= choice <= 7:
-                valid_num = True
-            else:
-                print("Invalid input - enter a number from 1 to 7.")
+        elif choice == 3:
+            mod_contact.phone = input("Phone #: ")
 
-        except ValueError:
-            print("Enter a whole number.")
+        elif choice == 4:
+            mod_contact.address = input("Address: ")
 
-        if valid_num:
-            if choice == 1:
-                mod_contact.first_name = input("First name: ")
+        elif choice == 5:
+            mod_contact.city = input("City: ")
 
-            elif choice == 2:
-                mod_contact.last_name = input("Last name: ")
+        elif choice == 6:
+            mod_contact.zip = input("Zip: ")
 
-            elif choice == 3:
-                mod_contact.phone = input("Phone #: ")
-
-            elif choice == 4:
-                mod_contact.address = input("Address: ")
-
-            elif choice == 5:
-                mod_contact.city = input("City: ")
-
-            elif choice == 6:
-                mod_contact.zip = input("Zip: ")
-
-            elif choice == 7:
-                menu_change = False
+        elif choice == 7:
+            menu_change = False
                 
 
             
@@ -116,7 +98,7 @@ def main():
             print("Number of contacts:", len(contacts))
             contact_num = 1
             for cont in contacts:
-                print(f"{contact_num}. {cont}")
+                print(str(contact_num) + ". " + str(cont))
                 contact_num += 1
         elif choice == 2:
             print("Enter new contact:")
@@ -136,18 +118,8 @@ def main():
             print("1. Search by last name")
             print("2. Search by zip")
 
-            user_choice = True
-            while user_choice:
-                try:
-                    choice = int(input("> "))
-
-                    if choice == 1 or choice == 2:
-                        user_choice = False
-                    else:
-                        print("Invalid input - enter 1 or 2")
-                except ValueError:
-                    print("Invalid input - enter an integer")
-
+            choice = check_input.get_int_range("> ", 1, 2)
+            
             if choice == 1:
                 search = input("Enter last name: ")
 
