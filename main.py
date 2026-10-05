@@ -18,6 +18,7 @@ def read_file():
 
     file = open("addresses.txt")
     lines = file.readlines()
+    file.close()
     new_contacts = []
 
     for line in lines:  # Goes through file lines adding contacts
@@ -36,7 +37,7 @@ def write_file(contacts):
 
 def get_menu_choice():
     # display the main menu to the user and then take in and return the user’s valid input
-    print("Roladex Menu: ")
+    print("Rolodex Menu: ")
     print("1. Display Contacts")
     print("2. Add Contact")
     print("3. Search Contact")
@@ -136,17 +137,21 @@ def main():
         elif choice == 4:
             first_name = input("First name: ")
             last_name = input("Last name: ")
+            found_contact = False
             for contact_item in contacts:
-                if contact_item.first_name == first_name and contact_item.last_name == last_name:
+                if not found_contact and contact_item.first_name == first_name and contact_item.last_name == last_name:
+                    found_contact = True
                     print(contact_item)
                     modify_contact(contact_item)
                     contacts.sort()
+
+            if not found_contact:
+                print("Contact not found.")
 
         elif choice == 5:
             print("Saving File...")
             write_file(contacts)
             print("Ending program")
             get_choice = False
-    read_file()
 
 main()
